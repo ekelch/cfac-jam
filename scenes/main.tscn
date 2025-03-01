@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://v6qetackdm8j"]
+
+[ext_resource type="PackedScene" uid="uid://b0oud6uapcyp0" path="res://scenes/player.tscn" id="1_eeafu"]
+[ext_resource type="Script" path="res://scripts/line.gd" id="2_dkgod"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_walge"]
+a = Vector2(-45, 3)
+b = Vector2(52, 76)
+
+[node name="Main" type="Node"]
+
+[node name="player" parent="." instance=ExtResource("1_eeafu")]
+
+[node name="line" type="StaticBody2D" parent="."]
+script = ExtResource("2_dkgod")
+
+[node name="Line2D" type="Line2D" parent="line"]
+points = PackedVector2Array(-48, 1, 10, 61, 96, 77, 169, 75)
+width = 4.0
+antialiased = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="line"]
+shape = SubResource("SegmentShape2D_walge")
