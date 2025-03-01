@@ -2,12 +2,12 @@ extends StaticBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var lines = get_children()
-	for line in lines:
-		var points = line.curve.get_baked_points()
+	var paths = get_children()
+	for path in paths:
+		var points = path.curve.get_baked_points()
 		var visibleLine = Line2D.new();
 		visibleLine.points = points
-		visibleLine.width = 1.0
+		visibleLine.width = 2.0
 		visibleLine.antialiased = true
 		self.add_child(visibleLine)
 		for i in points.size() - 1:
