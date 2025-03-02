@@ -1,29 +1,29 @@
-[gd_scene load_steps=12 format=3 uid="uid://v6qetackdm8j"]
+[gd_scene load_steps=13 format=3 uid="uid://v6qetackdm8j"]
 
 [ext_resource type="PackedScene" uid="uid://by1svinmgiknf" path="res://scenes/player.tscn" id="1_eeafu"]
 [ext_resource type="Script" uid="uid://bnm3qa6akexeu" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://bbni0bjodm2pd" path="res://scripts/line.gd" id="2_dkgod"]
 [ext_resource type="Script" uid="uid://ddn7rf46835se" path="res://scripts/player_paths.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://droxit1u1eea8" path="res://scripts/killzone.gd" id="5_tbgi4"]
-
-[sub_resource type="Curve2D" id="Curve2D_sugp2"]
-bake_interval = 20.0
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 359, 448, 0, 0, 0, 0, 489, 451)
-}
-point_count = 2
+[ext_resource type="Theme" uid="uid://dqo44ruwu1c5y" path="res://assets/fonts/theme.tres" id="6_tefeu"]
 
 [sub_resource type="Curve2D" id="Curve2D_xjq2p"]
 bake_interval = 20.0
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -19, 102, -82.0654, -93.0029, 82.0654, 93.0029, 69, 360, -21.9771, 35.3142, 21.9771, -35.3142, 253, 328)
+"points": PackedVector2Array(0, 0, 0, 0, -19, 102, -82.0654, -93.0029, 82.0654, 93.0029, 69, 360, -21.9771, 35.3142, 21.9771, -35.3142, 287, 386)
 }
 point_count = 3
 
 [sub_resource type="Curve2D" id="Curve2D_jyhfs"]
 bake_interval = 20.0
 _data = {
-"points": PackedVector2Array(-35.67, -142.944, 35.67, 142.944, 679, 482, -119.509, 236.01, 119.509, -236.01, 947, 454)
+"points": PackedVector2Array(-238.956, -262.825, 238.956, 262.825, 1597, 850, -86.0679, 120.597, 86.0679, -120.597, 2058, 1064)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_tbgi4"]
+_data = {
+"points": PackedVector2Array(-167.751, -258.566, 167.751, 258.566, 651, 591, -132.413, 111.744, 132.413, -111.744, 1110, 824)
 }
 point_count = 2
 
@@ -32,7 +32,7 @@ colors = PackedColorArray(0, 0.576471, 0.635294, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sugp2"]
 gradient = SubResource("Gradient_0wfyh")
-fill_from = Vector2(0, 1)
+fill_to = Vector2(1, 1)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tefeu"]
 
@@ -40,14 +40,13 @@ fill_from = Vector2(0, 1)
 script = ExtResource("1_jyhfs")
 
 [node name="player" parent="." instance=ExtResource("1_eeafu")]
+collision_layer = 2
 mass = 4.133
+gravity_scale = 0.0
 
 [node name="Camera2D2" type="Camera2D" parent="player"]
 zoom = Vector2(0.5, 0.5)
-limit_bottom = 1000
-
-[node name="Path2D2" type="Path2D" parent="."]
-curve = SubResource("Curve2D_sugp2")
+limit_bottom = 10000
 
 [node name="StaticPaths" type="StaticBody2D" parent="."]
 script = ExtResource("2_dkgod")
@@ -59,6 +58,9 @@ curve = SubResource("Curve2D_xjq2p")
 [node name="Path2D3" type="Path2D" parent="StaticPaths"]
 curve = SubResource("Curve2D_jyhfs")
 
+[node name="Path2D2" type="Path2D" parent="StaticPaths"]
+curve = SubResource("Curve2D_tbgi4")
+
 [node name="PlayerPaths" type="StaticBody2D" parent="."]
 position = Vector2(0.000244141, -0.00012207)
 scale = Vector2(1, 1)
@@ -66,20 +68,40 @@ script = ExtResource("4_jyhfs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(4578, -1042)
-scale = Vector2(184.469, 66.4374)
+position = Vector2(4111.5, 4380.25)
+scale = Vector2(208.578, 166.055)
 texture = SubResource("GradientTexture2D_sugp2")
 
 [node name="killzone" type="Area2D" parent="."]
-position = Vector2(481, 919)
+position = Vector2(687, 2956)
+collision_mask = 2
 script = ExtResource("5_tbgi4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+position = Vector2(-67, 426)
 shape = SubResource("WorldBoundaryShape2D_tefeu")
 
 [node name="Timer" type="Timer" parent="killzone"]
 wait_time = 0.5
 one_shot = true
+
+[node name="Text" type="Node" parent="."]
+
+[node name="Label" type="Label" parent="Text"]
+offset_left = 1144.0
+offset_top = 722.0
+offset_right = 1594.0
+offset_bottom = 746.0
+theme = ExtResource("6_tefeu")
+text = "Slow time with Spacebar"
+
+[node name="Label2" type="Label" parent="Text"]
+offset_left = -238.0
+offset_top = -71.0
+offset_right = 260.0
+offset_bottom = -47.0
+theme = ExtResource("6_tefeu")
+text = "Press 'R' to start or reset"
 
 [connection signal="body_entered" from="killzone" to="killzone" method="_on_body_entered"]
 [connection signal="timeout" from="killzone/Timer" to="killzone" method="_on_timer_timeout"]
