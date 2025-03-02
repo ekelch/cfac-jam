@@ -11,7 +11,7 @@ func _input(event: InputEvent) -> void:
 		if (event.is_action_pressed("bounce")):
 			#physics_material_override.bounce = 1.0
 			colorMod.g = 1.
-			Engine.time_scale = .2
+			Engine.time_scale = .15
 		if (event.is_action_released("bounce")):
 			#physics_material_override.bounce = 0.0
 			colorMod.g = 0.

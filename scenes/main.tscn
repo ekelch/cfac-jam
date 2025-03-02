@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://v6qetackdm8j"]
+[gd_scene load_steps=12 format=3 uid="uid://v6qetackdm8j"]
 
 [ext_resource type="PackedScene" uid="uid://by1svinmgiknf" path="res://scenes/player.tscn" id="1_eeafu"]
 [ext_resource type="Script" uid="uid://bnm3qa6akexeu" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="Script" uid="uid://bbni0bjodm2pd" path="res://scripts/line.gd" id="2_dkgod"]
 [ext_resource type="Script" uid="uid://ddn7rf46835se" path="res://scripts/player_paths.gd" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://droxit1u1eea8" path="res://scripts/killzone.gd" id="5_tbgi4"]
 
 [sub_resource type="Curve2D" id="Curve2D_sugp2"]
 bake_interval = 20.0
@@ -33,6 +34,8 @@ colors = PackedColorArray(0, 0.576471, 0.635294, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_0wfyh")
 fill_from = Vector2(0, 1)
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tefeu"]
+
 [node name="Main" type="Node"]
 script = ExtResource("1_jyhfs")
 
@@ -41,6 +44,7 @@ mass = 4.133
 
 [node name="Camera2D2" type="Camera2D" parent="player"]
 zoom = Vector2(0.5, 0.5)
+limit_bottom = 1000
 
 [node name="Path2D2" type="Path2D" parent="."]
 curve = SubResource("Curve2D_sugp2")
@@ -61,8 +65,21 @@ scale = Vector2(1, 1)
 script = ExtResource("4_jyhfs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 z_index = -1
-position = Vector2(3167.5, -1196)
-scale = Vector2(172.047, 108.812)
+position = Vector2(4578, -1042)
+scale = Vector2(184.469, 66.4374)
 texture = SubResource("GradientTexture2D_sugp2")
+
+[node name="killzone" type="Area2D" parent="."]
+position = Vector2(481, 919)
+script = ExtResource("5_tbgi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+shape = SubResource("WorldBoundaryShape2D_tefeu")
+
+[node name="Timer" type="Timer" parent="killzone"]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="killzone" to="killzone" method="_on_body_entered"]
+[connection signal="timeout" from="killzone/Timer" to="killzone" method="_on_timer_timeout"]

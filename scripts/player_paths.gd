@@ -6,7 +6,7 @@ var segment: SegmentShape2D
 var point: Vector2
 var reset: bool = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		if reset:
 			reset = false
@@ -27,8 +27,8 @@ func _process(delta: float) -> void:
 	else:
 		reset = true
 
-func newLine(point: Vector2) -> Line2D:
+func newLine(p: Vector2) -> Line2D:
 	var l = Line2D.new()
-	l.add_point(point)
+	l.add_point(p)
 	l.width = 2.0
 	return l

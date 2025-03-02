@@ -18,8 +18,3 @@ func _ready() -> void:
 			var collider = CollisionShape2D.new()
 			collider.shape = segment
 			self.add_child(collider)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
