@@ -1,6 +1,6 @@
 extends Node
 var running: bool = false
-@onready var player: RigidBody2D = $player
+@onready var player: RigidBody2D = $Game/player
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):

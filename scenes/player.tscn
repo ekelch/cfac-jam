@@ -24,3 +24,6 @@ debug_color = Color(0, 0.598659, 0.707658, 0.42)
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 modulate = Color(0, 0, 0, 1)
 mesh = SubResource("SphereMesh_b137o")
+
+[node name="ForceTimer" type="Timer" parent="."]
+wait_time = 0.2

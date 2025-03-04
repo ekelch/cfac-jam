@@ -1,7 +1,6 @@
 extends StaticBody2D
 @onready var path_2d: Path2D = $Path2D
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var paths = get_children()
 	for path in paths:
