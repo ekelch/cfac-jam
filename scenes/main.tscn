@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://v6qetackdm8j"]
+[gd_scene load_steps=14 format=3 uid="uid://v6qetackdm8j"]
 
 [ext_resource type="PackedScene" uid="uid://by1svinmgiknf" path="res://scenes/player.tscn" id="1_eeafu"]
 [ext_resource type="Script" uid="uid://bnm3qa6akexeu" path="res://scripts/main.gd" id="1_jyhfs"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ddn7rf46835se" path="res://scripts/player_path.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://droxit1u1eea8" path="res://scripts/killzone.gd" id="5_tbgi4"]
 [ext_resource type="Theme" uid="uid://dqo44ruwu1c5y" path="res://assets/fonts/theme.tres" id="6_tefeu"]
+[ext_resource type="Script" uid="uid://dnnhp7vh03oo6" path="res://scripts/hud.gd" id="7_o6xl0"]
 
 [sub_resource type="Curve2D" id="Curve2D_xjq2p"]
 bake_interval = 20.0
@@ -42,6 +43,7 @@ script = ExtResource("1_jyhfs")
 [node name="Game" type="Node2D" parent="."]
 
 [node name="player" parent="Game" instance=ExtResource("1_eeafu")]
+unique_name_in_owner = true
 collision_layer = 2
 mass = 4.133
 gravity_scale = 0.0
@@ -64,12 +66,13 @@ curve = SubResource("Curve2D_jyhfs")
 curve = SubResource("Curve2D_tbgi4")
 
 [node name="PlayerPaths" type="StaticBody2D" parent="Game"]
+unique_name_in_owner = true
 position = Vector2(0.000244141, -0.00012207)
 script = ExtResource("4_jyhfs")
 
 [node name="background" type="Sprite2D" parent="Game"]
 z_index = -1
-position = Vector2(4111.5, 4380.25)
+position = Vector2(4095, 2366)
 scale = Vector2(208.578, 166.055)
 texture = SubResource("GradientTexture2D_sugp2")
 
@@ -107,14 +110,49 @@ text = "Press 'R' to start or reset"
 metadata/_edit_use_anchors_ = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("7_o6xl0")
 
-[node name="Boost" type="Label" parent="HUD"]
-offset_right = 68.0
-offset_bottom = 23.0
-theme = ExtResource("6_tefeu")
-theme_override_font_sizes/font_size = 16
-text = "Boost"
+[node name="Control" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.0236111
+offset_bottom = 4.0
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="BoostLabel" type="Label" parent="HUD/Control/HBoxContainer"]
+layout_mode = 2
+text = "Boost"
+
+[node name="BoostBar" type="ProgressBar" parent="HUD/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+step = 1.0
+value = 20.0
+show_percentage = false
+
+[node name="DrawLabel" type="Label" parent="HUD/Control/HBoxContainer"]
+layout_mode = 2
+text = "Draw"
+
+[node name="DrawBar" type="ProgressBar" parent="HUD/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+step = 1.0
+value = 70.0
+show_percentage = false
 
 [connection signal="body_entered" from="Game/killzone" to="Game/killzone" method="_on_body_entered"]
 [connection signal="timeout" from="Game/killzone/Timer" to="Game/killzone" method="_on_timer_timeout"]

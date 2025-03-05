@@ -3,6 +3,9 @@ extends RigidBody2D
 @onready var force_timer: Timer = $ForceTimer
 
 var colorMod = Color(0,0,0,1)
+var boostValue: float = 50
+var drawValue: float = 20
+const force = 2500
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -19,7 +22,11 @@ func _input(event: InputEvent) -> void:
 	
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("boost"):
-		boost()
+		boost(delta)
 	
-func boost() -> void:
-	apply_impulse(linear_velocity.normalized() * 20)
+func boost(delta: float) -> void:
+	var impulse = force * delta
+	var sub = delta * 30
+	if boostValue - sub > 0:
+		apply_impulse(linear_velocity.normalized() * impulse)
+		boostValue -= sub

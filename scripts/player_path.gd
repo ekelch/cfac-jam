@@ -4,14 +4,18 @@ var lastPoint: Vector2 = Vector2(0,0)
 var visLine: Line2D
 var point: Vector2
 var reset: bool = true
+var drawValue: float = 80
+const drawDepleteStep = 1
 
 func _process(_delta: float) -> void:
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) && drawValue > 0:
 		if reset:
 			reset = false
 			startNewLine()
+			drawValue -= drawDepleteStep
 		elif get_global_mouse_position().distance_to(point) > 10:
 			continueLine()
+			drawValue -= drawDepleteStep
 	elif Input.is_action_just_released("draw"):
 		redrawSmooth()
 		reset = true
