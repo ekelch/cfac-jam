@@ -4,7 +4,7 @@ var lastPoint: Vector2 = Vector2(0,0)
 var visLine: Line2D
 var point: Vector2
 var reset: bool = true
-var drawValue: float = 80
+var drawValue: float = 30
 const drawDepleteStep = 1
 
 func _process(_delta: float) -> void:
